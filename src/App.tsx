@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import Papa from 'papaparse';
 import { Header } from './components/header/Header';
-import { Main } from './components/Main';
 import type { DashboardRegionCollection } from './types/DashboardRegionCollection';
+import { AnalysisSection } from './components/analysisSection/AnalysisSection';
 
 
 const App = () => {
   const [dashboardData, setDashboardData] = useState<Map<string, DashboardRegionCollection>>(new Map());
-  const [csvData, setCsvData] = useState<Array<Array<any>>>([]);
   const hasStarted = useRef(false);
 
   useEffect(() => {
@@ -19,7 +18,6 @@ const App = () => {
 
   const streamCsvData = () => {
     const allRegions: Map<string, DashboardRegionCollection> = new Map();
-    let currentCsvData: Array<Array<any>> = [];
     let index = 0;
 
     Papa.parse("https://s3.iiasa.ac.at/accelerator-prod/demo/Demo/sample.csv", {
@@ -27,7 +25,6 @@ const App = () => {
       worker: false,
       skipEmptyLines: true,
       step: (results) => {
-        currentCsvData.push(results.data);
         //to skip the header row
         if (index > 0) {
           const [model, scenario, region, variable, item, unit, year, value] = results.data;
@@ -68,8 +65,6 @@ const App = () => {
       },
       complete: () => {
         setDashboardData(allRegions);
-
-        setCsvData(currentCsvData);
       }
     });
   };
@@ -77,7 +72,7 @@ const App = () => {
   return (
     <>
       <Header></Header>
-      <Main data={dashboardData} csvData={csvData}></Main>
+      <AnalysisSection regionCollection={dashboardData}></AnalysisSection>
     </>
   );
 };

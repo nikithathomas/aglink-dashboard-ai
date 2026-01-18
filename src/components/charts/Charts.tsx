@@ -99,11 +99,10 @@ export function Charts({ formSubmitted, visual, regions,
         return `${Visuals[visual]} for ${LandUsage[item]} over the ${years.length > 1 ? `years ${yearString}` : `year ${yearString}`}.`
     }
 
-    return (
-        <section className="section right-panel">
-            <Insights regionCollection={regionCollection} selectedRegion={selectedRegion}></Insights>
-
-            {regionCollection.size > 0 && traces.length > 0 ? <>
+    function populateCharts(){
+        if(regionCollection.size > 0){
+            if(traces.length > 0){
+                return <>
                 <h4 className="section__title">{createChartTitle()}</h4>
                 {(formSubmitted && visual === "bar") ?
                     (<BarChart traces={traces} axesData={{ x: 'Years', y: yAxisUnit }}>
@@ -111,7 +110,18 @@ export function Charts({ formSubmitted, visual, regions,
                 {(formSubmitted && visual === "timeseries") ?
                     <TimeSeriesChart traces={traces} axesData={{ x: 'Years', y: yAxisUnit }}>
                     </TimeSeriesChart> : ""}
-            </> : ""}
+            </>
+            } else {
+                return <p className="section__error">The selected land usage or metrics have not been measured, please select other metrics or land usage filters</p>
+            }
+        }
+        return "";
+    }
+    return (
+        <section className="section right-panel">
+            <Insights regionCollection={regionCollection} selectedRegion={selectedRegion}></Insights>
+
+            {populateCharts()}
         </section>
     )
 }

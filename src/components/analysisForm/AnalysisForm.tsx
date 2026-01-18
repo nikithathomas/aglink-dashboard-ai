@@ -49,7 +49,7 @@ export function AnalysisForm({ regions, handleRegionChange, variable,
                             </select>
                         </label>
                         <label htmlFor="variable" className="left-panel__label">
-                            <span className="left-panel__text">Metric</span>
+                            <span className="left-panel__text">Metrics</span>
                             <select name="variable" id="variable" value={variable}
                                 onChange={handleVariableChange} className="left-panel__field section__field">
                                 <option value="">Select</option>
