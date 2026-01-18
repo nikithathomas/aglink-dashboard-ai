@@ -23,12 +23,14 @@ export function Charts({ formSubmitted, visual, regions,
 
     const [traces, setTraces] = useState<Array<ChartTrace>>([]);
     const [yAxisUnit, setYAxisUnit] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         if (formSubmitted) {
             processTraces();
         } else {
             setTraces([]);
+            setErrorMessage("");
         }
     }, [regionCollection, formSubmitted]);
 
@@ -70,14 +72,19 @@ export function Charts({ formSubmitted, visual, regions,
                     trace.x.push(year);
                     trace.y.push(selectedRegion.values[index])
                 }
-                if (index === selectedRegion?.years.length - 1) {
+                if (index === selectedRegion?.years.length - 1 && trace.x.length > 0 && trace.y.length > 0) {
                     allTraces.push(trace);
                 }
             })
         })
 
-        setTraces(allTraces);
-        setYAxisUnit(selectedYAxisUnit)
+        if (allTraces.length > 0 && regionCollection.size > 0) {
+            setTraces(allTraces);
+            setYAxisUnit(selectedYAxisUnit)
+        } else {
+            setErrorMessage("The selected land usage or metrics have not been measured, please select other metrics or land usage filters");
+        }
+
     }
 
     function createChartTitle() {
@@ -99,20 +106,20 @@ export function Charts({ formSubmitted, visual, regions,
         return `${Visuals[visual]} for ${LandUsage[item]} over the ${years.length > 1 ? `years ${yearString}` : `year ${yearString}`}.`
     }
 
-    function populateCharts(){
-        if(regionCollection.size > 0){
-            if(traces.length > 0){
+    function populateCharts() {
+        if (regionCollection.size > 0) {
+            if (traces.length > 0) {
                 return <>
-                <h4 className="section__title">{createChartTitle()}</h4>
-                {(formSubmitted && visual === "bar") ?
-                    (<BarChart traces={traces} axesData={{ x: 'Years', y: yAxisUnit }}>
-                    </BarChart>) : ""}
-                {(formSubmitted && visual === "timeseries") ?
-                    <TimeSeriesChart traces={traces} axesData={{ x: 'Years', y: yAxisUnit }}>
-                    </TimeSeriesChart> : ""}
-            </>
+                    <h4 className="section__title">{createChartTitle()}</h4>
+                    {(formSubmitted && visual === "bar") ?
+                        (<BarChart traces={traces} axesData={{ x: 'Years', y: yAxisUnit }}>
+                        </BarChart>) : ""}
+                    {(formSubmitted && visual === "timeseries") ?
+                        <TimeSeriesChart traces={traces} axesData={{ x: 'Years', y: yAxisUnit }}>
+                        </TimeSeriesChart> : ""}
+                </>
             } else {
-                return <p className="section__error">The selected land usage or metrics have not been measured, please select other metrics or land usage filters</p>
+                return <p className="section__error">{errorMessage}</p>
             }
         }
         return "";
