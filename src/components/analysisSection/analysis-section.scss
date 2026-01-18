@@ -1,0 +1,31 @@
+.main-panel {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    min-height: 100vh;
+
+    .section {
+        &__title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2b3c;
+        }
+
+        &__button {
+            border-radius: 5px;
+            border: none;
+            background-color: #1a2b3c;
+            color: #f4f7f6;
+            padding: 5px 10px;
+            &:disabled{
+                opacity: 0.5;
+            }
+        }
+
+        &__field {
+            padding: 5px;
+            border-radius: 5px;
+            border-width: 1px;
+        }
+    }
+}

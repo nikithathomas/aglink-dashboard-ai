@@ -1,0 +1,13 @@
+.chatbot {
+    &__response {
+        height: 200px;
+        overflow-y: scroll;
+        border: 1px solid #1a2b3c;
+        margin-top: 10px;
+        border-radius: 5px;
+        word-break: break-word;
+    }
+    &__send {
+       margin-left: 10px; 
+    }
+}

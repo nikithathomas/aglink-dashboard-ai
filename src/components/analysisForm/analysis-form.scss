@@ -1,0 +1,29 @@
+.left-panel{
+    flex: 1;
+    padding: 0px 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+    border: 1px solid #e1e4e8;
+    
+    &__section {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__label{
+        font-size: 12px;
+        font-weight: 500;
+        color: #7f8c8d;
+    }
+    &__text {
+        padding-bottom: 5px;
+    }
+    &__field {
+        display: block;
+    }
+    &__reset{
+        margin-left: 10px;
+    }
+    &__filters{
+        border: 1px solid #1a2b3c;
+        border-radius: 5px;
+    }
+}

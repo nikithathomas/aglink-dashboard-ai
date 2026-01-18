@@ -1,0 +1,14 @@
+.insights {
+
+    &__entry {
+        &-metric {
+            padding-right: 10px;
+        }
+    }
+
+    &__container {
+        border: 1px solid #1a2b3c;
+        border-radius: 5px;
+        padding: 0 10px;
+    }
+}
