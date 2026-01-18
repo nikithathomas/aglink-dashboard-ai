@@ -58,12 +58,12 @@ export function Insights({
       <h4 className="section__title">Land insights of {Regions[selectedRegion]}</h4>
       <div className="insights__container">
         {totalLand.length > 0 && <p className="insights__entry">
-          <span className="insights__entry-metric">Total Land Area:</span>
+          <span className="insights__entry-metric">Total Land Area Used:</span>
           <span className="insights__entry-value">{totalLand}</span>
         </p>}
 
         {totalProduction.length > 0 && <p className="insights__entry">
-          <span className="insights__entry-metric">Total Land Production:</span>
+          <span className="insights__entry-metric">Total Produce from Land:</span>
           <span className="insights__entry-value">{totalProduction}</span>
         </p>}
         {totalYield.length > 0 && <p className="insights__entry">
